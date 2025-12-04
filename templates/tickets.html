@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><title>Tickets</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head><body class="p-4"><h2 class="mb-4">🎟 Tickets</h2>
+<a href="/" class="btn btn-secondary mb-3">← Back to Movies</a>
+<div class="card p-3 mb-4"><h4>Add Ticket</h4>
+<form action="/tickets/add" method="POST" class="row g-2">
+<div class="col-md-2"><input type="number" name="ticket_id" class="form-control" placeholder="ID" required></div>
+<div class="col-md-3"><select name="showtime_id" class="form-control" required>
+<option value="">Select Showtime</option>{% for s in showtimes %}<option value="{{ s.showtime_id }}">{{ s.showtime_id }}</option>{% endfor %}
+</select></div>
+<div class="col-md-3"><select name="seat_id" class="form-control" required>
+<option value="">Select Seat</option>{% for st in seats %}<option value="{{ st.seat_id }}">{{ st.seat_id }}</option>{% endfor %}
+</select></div>
+<div class="col-md-2"><input type="number" step="0.01" name="final_price" class="form-control" placeholder="Price" required></div>
+<div class="col-md-1"><button class="btn btn-success w-100">Add</button></div>
+</form></div>
+<table class="table table-bordered table-hover">
+<thead class="table-dark"><tr><th>ID</th><th>Movie</th><th>Showtime</th><th>Seat</th><th>Final Price</th><th>Actions</th></tr></thead>
+<tbody>
+{% for t in tickets %}
+<tr>
+<td>{{ t.ticket_id }}</td><td>{{ t.title }}</td><td>{{ t.start_time }}</td>
+<td>{{ t.seat_row }}{{ t.seat_number }}</td><td>{{ t.final_price }}</td>
+<td><a href="/tickets/edit/{{ t.ticket_id }}" class="btn btn-warning btn-sm">Edit</a>
+<a href="/tickets/delete/{{ t.ticket_id }}" class="btn btn-danger btn-sm">Delete</a></td>
+</tr>{% endfor %}
+</tbody></table></body></html>

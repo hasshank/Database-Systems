@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><title>Showtimes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head><body class="p-4">
+<h2 class="mb-4">🕒 Showtimes</h2>
+<a href="/" class="btn btn-secondary mb-3">← Back to Movies</a>
+<div class="card p-3 mb-4"><h4>Add Showtime</h4>
+<form action="/showtimes/add" method="POST" class="row g-2">
+<div class="col-md-2"><input type="number" name="showtime_id" class="form-control" placeholder="ID" required></div>
+<div class="col-md-3"><select name="movie_id" class="form-control" required>
+<option value="">Select Movie</option>{% for m in movies %}<option value="{{ m.movie_id }}">{{ m.title }}</option>{% endfor %}
+</select></div>
+<div class="col-md-3"><select name="room_id" class="form-control" required>
+<option value="">Select Room</option>{% for r in rooms %}<option value="{{ r.room_id }}">{{ r.room_name }}</option>{% endfor %}
+</select></div>
+<div class="col-md-2"><input type="datetime-local" name="start_time" class="form-control" required></div>
+<div class="col-md-2"><input type="datetime-local" name="end_time" class="form-control"></div>
+<div class="col-md-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
+<div class="col-md-1"><button class="btn btn-success w-100">Add</button></div>
+</form></div>
+<table class="table table-bordered table-hover">
+<thead class="table-dark"><tr><th>ID</th><th>Movie</th><th>Room</th><th>Start</th><th>End</th><th>Price</th><th>Actions</th></tr></thead>
+<tbody>
+{% for s in showtimes %}
+<tr>
+<td>{{ s.showtime_id }}</td><td>{{ s.title }}</td><td>{{ s.room_name }}</td>
+<td>{{ s.start_time }}</td><td>{{ s.end_time }}</td><td>{{ s.price }}</td>
+<td><a href="/showtimes/edit/{{ s.showtime_id }}" class="btn btn-warning btn-sm">Edit</a>
+<a href="/showtimes/delete/{{ s.showtime_id }}" class="btn btn-danger btn-sm">Delete</a></td>
+</tr>{% endfor %}
+</tbody></table></body></html>
